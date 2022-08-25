@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/*fonte importada do google fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+	/*instânciando a fonte importada*/
+	font-family: 'Roboto', sans-serif;
+	font-size: 1em;
+	font-weight: 400;
+}
+
+h1 {
+	color: #66bbff;
+}
