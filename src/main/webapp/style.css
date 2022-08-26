@@ -12,3 +12,13 @@ body {
 h1 {
 	color: #66bbff;
 }
+
+.Botao1 {
+	text-decoration: nome;
+	background-color: #66bbff;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700;
+	border-radius: 5px;
+}
