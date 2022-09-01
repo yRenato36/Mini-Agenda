@@ -20,7 +20,7 @@ public class JavaBeans {
 		this.email = email;
 	}
 
-
+	//para obter o conteúdos das variáveis desta classe, utilize os métodos públicos abaixo
 	public String getIdcon() {
 		return idcon;
 	}

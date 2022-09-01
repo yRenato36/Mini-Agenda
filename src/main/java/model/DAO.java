@@ -1,7 +1,9 @@
 package model;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement; // importa a classe que permite executar um comando sql pelo Java
 
 public class DAO {
 	/*Módulo de conexão*/
@@ -29,6 +31,30 @@ public class DAO {
 			return null;
 		}
 	}
+	/*create*/
+	public void inserirContato(JavaBeans contato) {
+		String create = "insert into contatos (nome, fone, email) values (?,?,?)";
+		//sempre que for fazer algo com o banco de dados, utilizar o try/catch
+		try {
+			//abrir conexão com o banco
+			Connection con = conectar();
+			//preparar a query que será executada no banco
+			PreparedStatement pst = con.prepareStatement(create);
+			//pst.setString: substitui as ? da String create lá em cima
+			pst.setString(1, contato.getNome());
+			pst.setString(2, contato.getFone());
+			pst.setString(3, contato.getEmail());
+			
+			//executar a query do sql - insere os dados ao 
+			pst.executeUpdate();
+			
+			//fechar a conexão com o banco
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	// teste de conexão
 	/*public void testeConexao() {
 		try {
