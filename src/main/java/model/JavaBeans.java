@@ -1,3 +1,7 @@
+/* FAZ PARTE DO MODEL
+ * 
+ * Função da classe: Responsável pela segurança dos dados
+ */
 package model;
 
 public class JavaBeans {
@@ -10,7 +14,6 @@ public class JavaBeans {
 	public JavaBeans() {
 		super();
 	}
-	
 	
 	public JavaBeans(String idcon, String nome, String fone, String email) {
 		super();

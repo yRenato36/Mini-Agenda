@@ -1,3 +1,9 @@
+/* É O PRÓPRIO CONTROLLER DA ARQUITETURA (MVC)
+ *
+ * Função: faz o intermédio entre a camada VIEW e MODEL, todas as requisições que chegam de VIEW passam por aqui,
+ * e então vão para o MODEL. Logo, o MODEL devolve uma resposta, que também passa por aqui e vai para VIEW.
+ */
+
 package controller;
 
 import java.io.IOException;

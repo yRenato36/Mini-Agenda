@@ -1,5 +1,5 @@
 /**
- * Validação de formularios
+ * Validação de formularios, dos campos
  * Autor: Renato Santana
  */
 
