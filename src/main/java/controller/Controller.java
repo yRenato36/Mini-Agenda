@@ -7,11 +7,15 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import model.DAO;
 import model.JavaBeans;
 
@@ -20,7 +24,7 @@ import model.JavaBeans;
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DAO dao = new DAO();
-	JavaBeans contato = new JavaBeans(); //este objeto contato, acessará os métodos públicos da classe JavaBeans 
+	JavaBeans contato = new JavaBeans(); // este objeto contato, acessará os métodos públicos da classe JavaBeans
 
 	public Controller() {
 		super();
@@ -45,31 +49,42 @@ public class Controller extends HttpServlet {
 
 	}
 
-	//listar contatos
+	// listar contatos
 	protected void contatos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("agenda.jsp");
+		//criando objeto que receberá os dados de JavaBeans
+		ArrayList<JavaBeans> lista = dao.listarContatos(); //objeto criado que executa o método listarContatos().
+		//testando o recebimento da lista
+		for(int i = 0; i < lista.size(); i++) {
+			System.out.println(lista.get(i).getIdcon());
+			System.out.println(lista.get(i).getNome());
+			System.out.println(lista.get(i).getFone());
+			System.out.println(lista.get(i).getEmail());
+			
+		}
 	}
-	//novo contato
+
+	// novo contato
 	protected void novoContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//teste de recebimento das informações do form
-		//request.getParameter("nome") rebebe dados do formulário
+		// teste de recebimento das informações do form
+		// request.getParameter("nome") rebebe dados do formulário
 		/*
-		System.out.println(request.getParameter("nome")); 
-		System.out.println(request.getParameter("fone"));
-		System.out.println(request.getParameter("email"));
-		*/
-		
-		//setando as variáveis da classe JavaBeans
-		contato.setNome(request.getParameter("nome"));//armazena na variável nome de JavaBeans os valores que recebeu do HTML
+		 * System.out.println(request.getParameter("nome"));
+		 * System.out.println(request.getParameter("fone"));
+		 * System.out.println(request.getParameter("email"));
+		 */
+
+		// setando as variáveis da classe JavaBeans
+		contato.setNome(request.getParameter("nome"));// armazena na variável nome de JavaBeans os valores que recebeu
+														// do HTML
 		contato.setFone(request.getParameter("fone"));
 		contato.setEmail(request.getParameter("email"));
-		
-		//invocando método inserirContato passando o objeto contato
+
+		// invocando método inserirContato passando o objeto contato
 		dao.inserirContato(contato);
-		
-		//redirecionar para o documento agenda.jsp
+
+		// redirecionar para o documento agenda.jsp
 		response.sendRedirect("main");
 	}
 }
