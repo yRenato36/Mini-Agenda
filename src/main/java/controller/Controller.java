@@ -8,8 +8,8 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,14 +54,20 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		//criando objeto que receberá os dados de JavaBeans
 		ArrayList<JavaBeans> lista = dao.listarContatos(); //objeto criado que executa o método listarContatos().
+		//Encominhar a lista gerada ao documento agenda.jsp
+		request.setAttribute("contatos", lista);
+		RequestDispatcher rd = request.getRequestDispatcher("agenda.jsp");
+		rd.forward(request, response); // encaminha o objeto lista ao documento agenda.jsp
+		
+		
 		//testando o recebimento da lista
+		/*
 		for(int i = 0; i < lista.size(); i++) {
 			System.out.println(lista.get(i).getIdcon());
 			System.out.println(lista.get(i).getNome());
 			System.out.println(lista.get(i).getFone());
 			System.out.println(lista.get(i).getEmail());
-			
-		}
+		}*/
 	}
 
 	// novo contato
