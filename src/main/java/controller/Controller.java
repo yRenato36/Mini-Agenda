@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import model.DAO;
 import model.JavaBeans;
 
-@WebServlet(urlPatterns = { "/Controller", "/main", "/insert" }) // este /insert, permite que essa camada controoller,
-																	// recebe os dados inseridos no no html
+@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select" }) // este /insert, permite que essa camada
+																			// controoller,
+// recebe os dados inseridos no no html
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DAO dao = new DAO();
@@ -37,37 +38,37 @@ public class Controller extends HttpServlet {
 		// dao.testeConexao();
 
 		String action = request.getServletPath();
-		System.out.println(action);
+		System.out.println(action); //printa as requisições que chegam do servlet
 
 		if (action.equals("/main")) {
 			contatos(request, response);
 		} else if (action.equals("/insert")) {
 			novoContato(request, response);
+		} else if (action.equals("/select")) {
+			listarContatos(request, response);
 		} else {
 			response.sendRedirect("index.html");
 		}
-
 	}
 
 	// listar contatos
 	protected void contatos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//criando objeto que receberá os dados de JavaBeans
-		ArrayList<JavaBeans> lista = dao.listarContatos(); //objeto criado que executa o método listarContatos().
-		//Encominhar a lista gerada ao documento agenda.jsp
+		// criando objeto que receberá os dados de JavaBeans
+		ArrayList<JavaBeans> lista = dao.listarContatos(); // objeto criado que executa o método listarContatos().
+		// Encominhar a lista gerada ao documento agenda.jsp
 		request.setAttribute("contatos", lista);
 		RequestDispatcher rd = request.getRequestDispatcher("agenda.jsp");
 		rd.forward(request, response); // encaminha o objeto lista ao documento agenda.jsp
-		
-		
-		//testando o recebimento da lista
+
+		// testando o recebimento da lista
 		/*
-		for(int i = 0; i < lista.size(); i++) {
-			System.out.println(lista.get(i).getIdcon());
-			System.out.println(lista.get(i).getNome());
-			System.out.println(lista.get(i).getFone());
-			System.out.println(lista.get(i).getEmail());
-		}*/
+		 * for(int i = 0; i < lista.size(); i++) {
+		 * System.out.println(lista.get(i).getIdcon());
+		 * System.out.println(lista.get(i).getNome());
+		 * System.out.println(lista.get(i).getFone());
+		 * System.out.println(lista.get(i).getEmail()); }
+		 */
 	}
 
 	// novo contato
@@ -92,5 +93,11 @@ public class Controller extends HttpServlet {
 
 		// redirecionar para o documento agenda.jsp
 		response.sendRedirect("main");
+	}
+	//Editar contatos
+	protected void listarContatos(HttpServletRequest request, HttpServletResponse response) {
+		String idcon = request.getParameter("idcon"); // recebe o id do contato que será alterado
+		//System.out.println(idcon); //printa o id do contato que foi clicado no botão "Editar"
+		contato.setIdcon(idcon);
 	}
 }
