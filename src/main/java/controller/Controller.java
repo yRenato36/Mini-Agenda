@@ -20,7 +20,7 @@ import model.DAO;
 import model.JavaBeans;
 
 @WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select" }) // este /insert, permite que essa camada
-																			// controoller,
+																			// controller,
 // recebe os dados inseridos no no html
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -99,5 +99,13 @@ public class Controller extends HttpServlet {
 		String idcon = request.getParameter("idcon"); // recebe o id do contato que será alterado
 		//System.out.println(idcon); //printa o id do contato que foi clicado no botão "Editar"
 		contato.setIdcon(idcon);
+		//executar método selecionarContato que está na classe DAO
+		dao.selecionarContato(contato);
+		
+		//teste de recebimento
+        System.out.println(contato.getIdcon());
+        System.out.println(contato.getNome());
+        System.out.println(contato.getFone());
+        System.out.println(contato.getEmail());
 	}
 }

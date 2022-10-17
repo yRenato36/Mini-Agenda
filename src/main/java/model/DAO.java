@@ -35,7 +35,7 @@ public class DAO {
 		}
 	}
 
-	/* create */
+	/** CRUD CREATE **/
 	public void inserirContato(JavaBeans contato) {
 		String create = "insert into contatos (nome, fone, email) values (?,?,?)";
 		// sempre que for fazer algo com o banco de dados, utilizar o try/catch
@@ -49,7 +49,7 @@ public class DAO {
 			pst.setString(2, contato.getFone());
 			pst.setString(3, contato.getEmail());
 
-			// executar a query do sql - insere os dados ao
+			// executar a query do sql - insere os dados ao BD
 			pst.executeUpdate();
 
 			// fechar a conexão com o banco
@@ -61,7 +61,7 @@ public class DAO {
 
 	/** CRUD READ **/
 	// Pesquisar sobre arraylist
-	public ArrayList<JavaBeans> listarContatos() { // vetor dinamico
+	public ArrayList<JavaBeans> listarContatos() { // vetor dinâmico
 		ArrayList<JavaBeans> contatos = new ArrayList<>();
 		String read = "select * from contatos order by nome";
 		try {
@@ -88,7 +88,28 @@ public class DAO {
 			return null;
 		}
 	}
-
+	/** CRUD UPDATE **/
+    //selecionar o contato
+    public void selecionarContato(JavaBeans contato) {
+        String read2 = "select * from contatos where idcon = ?";
+        try {
+            Connection con = conectar(); // conecta ao banco de dados
+            //prepara a query que será executada no banco
+            PreparedStatement pst = con.prepareStatement(read2); //recebe a variável que contém o comando que será executado no DB
+            pst.setString(1, contato.getIdcon()); // faz a substituição de ? no atributo read2
+            ResultSet rs = pst.executeQuery(); //busca as informações do banco para exibir no formulário de contatos
+            while(rs.next() ) { //executa equanto o objeto rs tiver um valor
+                //seta as variáveis da classe JavaBeans com rs.getString(1) que obtém o conteúdo do campo com id = 1 
+                contato.setIdcon(rs.getString(1));
+                contato.setNome(rs.getString(2));
+                contato.setFone(rs.getString(3));
+                contato.setEmail(rs.getString(4));               
+            }
+            con.close(); // fecha a conexão ao banco de dados
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 	// teste de conexão
 	/*
 	 * public void testeConexao() { try { Connection con = conectar();
