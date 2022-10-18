@@ -83,29 +83,38 @@ public class Controller extends HttpServlet {
 		 */
 
 		// setando as variáveis da classe JavaBeans
-		contato.setNome(request.getParameter("nome"));// armazena na variável nome de JavaBeans os valores que recebeu
-														// do HTML
+		contato.setNome(request.getParameter("nome"));// armazena na variável nome de JavaBeans os valores que recebeu do HTML
 		contato.setFone(request.getParameter("fone"));
 		contato.setEmail(request.getParameter("email"));
 
 		// invocando método inserirContato passando o objeto contato
 		dao.inserirContato(contato);
-
+		
 		// redirecionar para o documento agenda.jsp
 		response.sendRedirect("main");
 	}
 	//Editar contatos
-	protected void listarContatos(HttpServletRequest request, HttpServletResponse response) {
+	protected void listarContatos(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 		String idcon = request.getParameter("idcon"); // recebe o id do contato que será alterado
 		//System.out.println(idcon); //printa o id do contato que foi clicado no botão "Editar"
 		contato.setIdcon(idcon);
 		//executar método selecionarContato que está na classe DAO
 		dao.selecionarContato(contato);
 		
-		//teste de recebimento
+		/*teste de recebimento
         System.out.println(contato.getIdcon());
         System.out.println(contato.getNome());
         System.out.println(contato.getFone());
-        System.out.println(contato.getEmail());
+        System.out.println(contato.getEmail()); */
+		
+		//setar atributos do formulário com o conteúdo de JavaBeans
+        request.setAttribute("idcon", contato.getIdcon()); //coloca no idcon de editar.jsp com o valor que o método getIcon possui
+        request.setAttribute("nome", contato.getNome());
+        request.setAttribute("fone", contato.getFone());
+        request.setAttribute("email", contato.getEmail());
+        //ecaminhar esses valores ao documento editar.jsp
+        RequestDispatcher rd = request.getRequestDispatcher("editar.jsp");
+        rd.forward(request, response); //método forward precisa de um tratamento de exceções, para isso utilize o throws + para onde vai a exceção - EX: throws ServletException, IOException
 	}
 }
